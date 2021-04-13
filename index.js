@@ -22,29 +22,29 @@ console.log('Hello!');
 
 //first task of third lesson
 
-function name (a, b, c){
-    if ( a <=b ){
-        if (b <= c){
-            console.log (a, b, c);       
-        }
-        else if (a<=c){
-            console.log (a, c, b);
-        }
-        else {
-            console.log (c, a, b);
-        }
-    }
-    else if (c <= b){
-        console.log (c, b, a);       
-    }
-    else if (a <= c){
-        console.log (b, a, c);       
-    }
-    else {
-        console.log (b, c, a);       
-    }
-}
-name(68, 20, 67);
+// function name (a, b, c){
+//     if ( a <=b ){
+//         if (b <= c){
+//             console.log (a, b, c);       
+//         }
+//         else if (a<=c){
+//             console.log (a, c, b);
+//         }
+//         else {
+//             console.log (c, a, b);
+//         }
+//     }
+//     else if (c <= b){
+//         console.log (c, b, a);       
+//     }
+//     else if (a <= c){
+//         console.log (b, a, c);       
+//     }
+//     else {
+//         console.log (b, c, a);       
+//     }
+// }
+// name(68, 20, 67);
 
 //second task of four lesson
 
@@ -92,3 +92,64 @@ function main() {
 }
 
 main();
+
+//fourth homework
+// switch method. Thet is second method. In previous homework I used function method for counting temperature.
+let K;
+let C;
+let F;
+let unit = 'C';
+let temp = 1;
+
+switch (unit) {
+  case 'F':
+    F = temp,
+    C = (F - 32) * 5/9,
+    K = C + 273.15
+    console.log(F, C, K);
+  break;
+  
+  case 'C':
+    C = temp,
+    F = (C * 9/5) + 32,
+    K = C + 273.15
+    console.log(F, C, K);
+  break;
+  
+  case 'K':
+    K = temp,
+    C = K - 273.15,
+    F = (C * 9/5) + 32,
+    console.log(F, C, K);
+  break;
+}
+
+// Recursion 
+// function sum(n) {
+//   if (n === 1) {
+//     return 1;
+//   } else {
+//     return n + sum(n - 1);
+//   }
+// }
+// let result = sum;
+// console.log(result);
+
+function sum(n) {
+  if (n === 1) {
+    return 1;
+  } 
+  return n + sum(n - 1);
+}
+let result = sum;
+console.log(result);
+
+// function sum(num){
+//   if (num === 0) {
+//     return 0;
+//   } else {
+//     return num + sum(--num)
+//   }
+// }
+
+// sum(4);
