@@ -135,14 +135,14 @@ switch (unit) {
 // let result = sum;
 // console.log(result);
 
-function sum(n) {
-  if (n === 1) {
-    return 1;
-  } 
-  return n + sum(n - 1);
-}
-let result = sum;
-console.log(result);
+// function sum(n) {
+//   if (n === 1) {
+//     return 1;
+//   } 
+//   return n + sum(n - 1);
+// }
+// let result = sum;
+// console.log(result);
 
 // function sum(num){
 //   if (num === 0) {
@@ -153,3 +153,44 @@ console.log(result);
 // }
 
 // sum(4);
+
+// Homework 5
+let num = 1;
+  let result = [];
+  while (num <= 1000) {
+    result.push(num++);
+  }
+console.log(result);
+
+let evenNum = result.filter(x => x % 2 === 0 && x % 10 === 0);
+console.log(evenNum);
+
+let oddNum = result.filter(x => x % 2 === 1 && x % 3 === 0 && x % 5 === 0);
+oddNum.sort(function(a, b) {
+  return b - a;
+});
+console.log(oddNum);
+
+let student1Courses = ['Math', 'English', 'Programming'];
+let student2Courses = ['Geography', 'Spanish', 'Programming'];
+
+let studentCourses = student1Courses.concat(student2Courses);
+console.log(studentCourses.join(', '));
+
+// var x = 1;
+
+// while (x <= 20) {
+//     // check divisibility
+//     if (x % 3 === 0 && x % 5 === 0) {
+//         console.log('JuliaJames');
+//     } else if (x % 3 === 0) {
+//         console.log('Julia');
+//     } else if (x % 5 === 0) {
+//         console.log('James');
+//     } else {
+//         console.log(x);
+//     }
+//     // print Julia, James, or JuliaJames
+//     // increment x
+//     x += 1;
+// }
