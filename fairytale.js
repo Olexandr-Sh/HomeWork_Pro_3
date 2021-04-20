@@ -51,6 +51,7 @@ function fairytale() {
   };
   let hare = {
     name: 'Заєць',
+    ateHim: false,
     say: function () {
       console.log(threat);
     },
@@ -60,6 +61,7 @@ function fairytale() {
   };
   let wolf = {
     name: 'Вовк',
+    ateHim: false,
     say: function () {
       console.log(threat);
     },
@@ -69,6 +71,7 @@ function fairytale() {
   };
   let bear = {
     name: 'Ведмідь',
+    ateHim: false,
     say: function () {
       console.log(threat);
     },
@@ -79,11 +82,15 @@ function fairytale() {
   let fox = {
     name: 'Лисичка',
     deaf: 'недочуваю',
+    ateHim: true,
     say: function () {
       console.log(threat);
     },
     command: function () {
       console.log(commanded);
+    },
+    am: function () {
+      console.log(this.ateHim + ' А лисичка — гам його! Та й з\'їла!');
     }
   };
   
@@ -159,19 +166,38 @@ function chapter2(mainCharacter, hare) {
   hare.command();
   newAction = mainCharacter.song.join('');
   console.log(newAction);
+  mainCharacter.action();
 };
 function chapter3(mainCharacter, wolf) {
   wolf.say();
   mainCharacter.say(mainCharacter.appealToWolf());
   wolf.command();
+  delLastPart = mainCharacter.song.pop();
+  newLength = mainCharacter.song.push(' Я від зайця втік, то й від тебе втечу!');
+  newAction = mainCharacter.song.join('');
+  console.log(newAction);
+  mainCharacter.action();
 };
 function chapter4(mainCharacter, bear) {
   bear.say();
   mainCharacter.say(mainCharacter.appealToBear());
   bear.command();
+  // re = /' То й від тебе втечу!'/gi; Не розумію, чому не виходить заміна.
+  // newSong = mainCharacter.song.replace(re, ' Я від зайця втік, ');
+  // console.log(newSong);
+  delLastPart = mainCharacter.song.pop();
+  newLength = mainCharacter.song.push(' Я від зайця втік', ' Я від вовка втік,', ' то й від тебе втечу!');
+  newAction = mainCharacter.song.join('');
+  console.log(newAction);
+  mainCharacter.action();
 };
 function chapter5(mainCharacter, fox) {
   fox.say();
   mainCharacter.say(mainCharacter.appealToFox());
   fox.command();
+  removedSongItem = mainCharacter.song.splice(1);
+  newAction = mainCharacter.song.join('');
+  console.log(newAction);
+  fox.am();
+
 };
