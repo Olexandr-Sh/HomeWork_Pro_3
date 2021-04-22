@@ -1,8 +1,8 @@
 
 
 function fairytale() {
-  const threat = ('Колобок, колобок, я тебе з\'їм!');
-  const commanded = ('Ану заспівай!');
+  let threat = ('Колобок, колобок, я тебе з\'їм!');
+  let commanded = ('Ану заспівай!');
   let grandFa = {
     name: 'Дід',
     say: function () {
@@ -17,7 +17,7 @@ function fairytale() {
     answ: function () {
       console.log('Та з чого ж я спечу, як і борошна немає?');
     },
-    action: ['Пішла в хижку, ' + 'назмітала в засіку борошенця, витопила в печі, замісила гарненько борошно, спекла '],
+    action: ['Пішла в хижку, ', 'назмітала в засіку борошенця, витопила в печі, замісила гарненько борошно, спекла '],
   };
   let mainCharacter = {
     name: 'Колобок',
@@ -27,6 +27,7 @@ function fairytale() {
       (' Я від ' + grandFa.name + ' втік'),
       ' То й від тебе втечу!'],
     answ: 'Не їж мене, ' + ' ' + 'я тобі пісеньки заспіваю',
+    answWolfName: (' Я від вовка втік,'),
     say: function () {
       console.log(this.answ);
     },
@@ -154,7 +155,7 @@ function chapter1(grandFa, grandMa, mainCharacter) {
   grandMa.answ();
   grandFa.ask();
   grandMa.action.push(mainCharacter.name);
-  newAction = grandMa.action.join('');
+  let newAction = grandMa.action.join('');
   console.log(newAction);
   mainCharacter.action();
 };
@@ -164,7 +165,7 @@ function chapter2(mainCharacter, hare) {
   // newAnsw = mainCharacter.answ.replace(re, mainCharacter.appealToWolf);
   mainCharacter.say(mainCharacter.appealToHare());
   hare.command();
-  newAction = mainCharacter.song.join('');
+  let newAction = mainCharacter.song.join('');
   console.log(newAction);
   mainCharacter.action();
 };
@@ -172,9 +173,9 @@ function chapter3(mainCharacter, wolf) {
   wolf.say();
   mainCharacter.say(mainCharacter.appealToWolf());
   wolf.command();
-  delLastPart = mainCharacter.song.pop();
-  newLength = mainCharacter.song.push(' Я від зайця втік, то й від тебе втечу!');
-  newAction = mainCharacter.song.join('');
+  let delLastPart = mainCharacter.song.pop();
+  let newLength = mainCharacter.song.push(' Я від зайця втік, то й від тебе втечу!');
+  let newAction = mainCharacter.song.join('');
   console.log(newAction);
   mainCharacter.action();
 };
@@ -185,9 +186,9 @@ function chapter4(mainCharacter, bear) {
   // re = /' То й від тебе втечу!'/gi; Не розумію, чому не виходить заміна.
   // newSong = mainCharacter.song.replace(re, ' Я від зайця втік, ');
   // console.log(newSong);
-  delLastPart = mainCharacter.song.pop();
-  newLength = mainCharacter.song.push(' Я від зайця втік', ' Я від вовка втік,', ' то й від тебе втечу!');
-  newAction = mainCharacter.song.join('');
+  let delLastPart = mainCharacter.song.pop();
+  let newLength = mainCharacter.song.push(' Я від зайця втік', ' Я від вовка втік,', ' то й від тебе втечу!');
+  let newAction = mainCharacter.song.join('');
   console.log(newAction);
   mainCharacter.action();
 };
@@ -195,8 +196,8 @@ function chapter5(mainCharacter, fox) {
   fox.say();
   mainCharacter.say(mainCharacter.appealToFox());
   fox.command();
-  removedSongItem = mainCharacter.song.splice(1);
-  newAction = mainCharacter.song.join('');
+  let removedSongItem = mainCharacter.song.splice(1);
+  let newAction = mainCharacter.song.join('');
   console.log(newAction);
   fox.am();
 
