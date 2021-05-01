@@ -21,49 +21,46 @@ function messageListFunction() {
 };
 messageListFunction();
 
-let messages = [];
+let messages = ['', '', ''];
 let message_1 = 0;
-
-aElement.addEventListener('click', getMessage);
 
 function getMessage(parametr) {
   parametr.preventDefault();
   let newMessage = document.createElement('div');
   body.appendChild(newMessage);
   let inputValue = inputElement.value;
-  inputElement.value = '';
-  // let messageObject = { oneMessage: inputValue };
-  messages.push(inputValue);
-  newMessage.textContent += messages[message_1];
-  // message_1++;
-  messages[messages.length - 1];
+  inputElement.value = 'Привіт!';
+  newMessage.textContent = inputValue;
+  let checkBox = document.querySelector('.clear_Message');
+  if (checkBox.checked === true) {
+    setTimeout(() => {
+      newMessage.remove()
+    }, 5000)
+  }
 };
 
-aElement.addEventListener('click', chatStart);
+aElement.addEventListener('click', getMessage);
 
-function clearMessage(clear) {
-  clear.preventDefault();
-  document.getElementById(clear_Message);
-  let clearMes = setInterval(() => {
-    if (clear_Message === true) {
-      messages.shift();
-    } else {
-      messages.append('Hello spamer!)');
-    };
-  }, 5000);
-};
-
-function chatStart() {
-  // let messagesList = [' ', ' ', ' '];
-  let id = setInterval(() => {
-    createNewMessage(messagesList[message_1]);
+function chatStart(chat) {
+  chat.preventDefault();
+  clicker = aElement.addEventListener('click', getMessage);
+  let addMessage = setInterval(() => {
+    createMessageElement(messages[message_1]);
     message_1++;
-    if (message_1 === messagesList.length) {
+    if (message_1 === messages.length) {
       message_1 = 0;
     }
   }, 1000);
-  setTimout(() => { clearInterval(id); alert('stop'); }, 5000);
-};
+  // if (aElement === true) {
+  //   setTimeout(() => {
+  //     message_1++;
+  //   }, 1000)
+  // };
+  // setTimout(() => {
+  //   clearTimeout(clicker); alert('stop');
+  // }, 10000);
+}
+aElement.addEventListener('click', chatStart);
 
 
 
