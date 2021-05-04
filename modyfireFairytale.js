@@ -32,7 +32,7 @@ function fairytale() {
       let pause = new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve(this.answ);
-        }, 3000);
+        }, 5000);
       });
       pause.then((value) => {
         console.log(value);
@@ -53,6 +53,7 @@ function fairytale() {
     name: 'Лисичка',
     deaf: 'недочуваю',
     ateHim: true,
+    annoyed: 'Колобок, чому мовчиш?',
     say: function () {
       console.log(threat);
     },
@@ -106,6 +107,9 @@ function chapter1(grandFa, grandMa, mainCharacter) {
 function chapter5(mainCharacter, fox) {
   fox.say();
   mainCharacter.say(mainCharacter.appealToFox());
+  let foxAnswer = setTimeout(() => {
+    console.log(fox.annoyed);
+  }, 3000);
   fox.command();
   let removedSongItem = mainCharacter.song.splice(1);
   let newAction = mainCharacter.song.join('');
@@ -122,7 +126,7 @@ function chapter5(mainCharacter, fox) {
       }
     }
   );
-  let finalEpisod = function (eatKolobok) {
+  let finalEpisod = function () {
     let fairytaleMessage = 'А ' + mainCharacter.mainCharacterCondition;
     return Promise.resolve(fairytaleMessage);
   };
