@@ -213,15 +213,15 @@ function chapter5(mainCharacter, fox) {
   //     }
   //   }
   // );
-  let finalEpisod = function () {
-    let fairytaleMessage = 'А ' + mainCharacter.mainCharacterCondition;
-    let fairytaleMessageProm = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(fairytaleMessage);
-      }, 16000);
-    });
-    return fairytaleMessageProm;
-  };
+  // let finalEpisod = function () {
+  //   let fairytaleMessage = 'А ' + mainCharacter.mainCharacterCondition;
+  //   let fairytaleMessageProm = new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       resolve(fairytaleMessage);
+  //     }, 16000);
+  //   });
+  //   return fairytaleMessageProm;
+  // };
   let foxActAndKolobokCond = function () {
     kolobokCondition
       .then(finalEpisod)
