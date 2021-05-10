@@ -136,11 +136,11 @@ fairytale()
 function chapter1(grandFa, grandMa, mainCharacter) {
   grandMa.answ('Діду ти голодний?');
 
-  grandFa.say()
+  return grandFa.say()
     .then((grandFaState) => {
       console.log('grandFaState', grandFaState);
       grandMa.answ('Та з чого ж я спечу, як і борошна немає?');
-      grandFa.say('От, бабусю, піди в хижку та назмітай у засіку борошенця, то й буде колобок.')
+      return grandFa.say('От, бабусю, піди в хижку та назмітай у засіку борошенця, то й буде колобок.')
         .then((grandFaState2) => {
           console.log('grandFaState2', grandFaState2);
           grandMa.answ('То що, прийдеться пекти колобок?');
@@ -154,37 +154,38 @@ function chapter1(grandFa, grandMa, mainCharacter) {
   grandMa.answ('Діду ти голодний?');
 };
 function chapter5(mainCharacter, fox) {
-  fox.say()
+  return fox.say()
     .then((foxState) => {
       console.log('foxState', foxState);
       mainCharacter.appealToFox('Лисичко сестричко не їж мене, я тобі пісеньки заспіваю!');
-      fox.say('Колобоок???')
+      return fox.say('Колобоок???')
         .then((foxState2) => {
           console.log('foxState2', foxState2);
           mainCharacter.appealToFox('');
+        
+          return fox.say('Колобок!? То ти співатимеш?')
+            .then(() => {
+              return mainCharacter.say()
+                .then((kolobok) => {
+                  console.log('kolobok', kolobok);
+                  return fox.say('Колобок я тебе точно з\'їм')
+                    .then(() => {
+                      return mainCharacter.say('Я по засіку метений..')
+                        .then((kolobok2) => {
+                          console.log('kolobok2', kolobok2);
+                          return fox.say('А лисичка його гам, і з\'їла');
+                        });
+                    });
+                })
+                .catch((reason) => {
+                  console.log('reason', reason);
+                  fox.say('Колобок ти від мене не втечеш!');
+                });
+            });
         });
     })
-    .catch((reason) => {
-      console.log('reason', reason);
+    .catch((reson) => {
+      console.log('reason', reson);
       mainCharacter.appealToFox('=)');
     });
-  
-  fox.say('Колобок!? То ти співатимеш?');
-  
-  mainCharacter.say()
-    .then((kolobok) => {
-      console.log('kolobok', kolobok);
-      fox.say('Колобок я тебе точно з\'їм');
-      mainCharacter.say('Я по засіку метений..')
-        .then((kolobok2) => {
-          console.log('kolobok2', kolobok2);
-          fox.say('А лисичка його гам, і з\'їла');
-        });
-    })
-    .catch((reason) => {
-      console.log('reason', reason);
-      fox.say('Колобок ти від мене не втечеш!');
-    });
-  
-  mainCharacter.mainCharacterCondition;
 };
