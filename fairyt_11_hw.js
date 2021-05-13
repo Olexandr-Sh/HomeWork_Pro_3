@@ -1,18 +1,20 @@
-// let GrandFa = function () {};
-// GrandFa.prototype.age = 'old';
-// let GrandMa = function () {};
-// GrandMa.prototype = new grandFa();
-let MainCharacter = function () {};
-// MainCharacter.prototype.age = 'young';
-// let Fox = function () {};
-// Fox.prototype = new mainCharacter();
+let GrandFa = function () {};
+GrandFa.prototype.age = 'old';
+let GrandMa = function () {};
+GrandMa.prototype = new GrandFa();
+let MainCharacter = function (params) {
+  console.log(params);
+};
+MainCharacter.prototype.age = 'young';
+let Fox = function () {};
+Fox.prototype = new MainCharacter();
 
-// let gf = new GrandFa();
-// let gm = new GrandMa();
+let gf = new GrandFa();
+let gm = new GrandMa();
 let mc = new MainCharacter();
-// let f = new Fox();
+let f = new Fox();
 
-// console.log([gf.age, gm.age, mc.age, f.age]);
+console.log([gf.age, gm.age, mc.age, f.age]);
 
 function Character(params) {
   this.name = params.name;
@@ -23,10 +25,14 @@ function Character(params) {
 }
 
 Character.prototype.say = function (phrase) {
-  console.log(`${this.name}: ${phrase}`);
+  setTimeout(() => {
+    console.log(`${this.name}: ${phrase}`);
+  }, 2000);
 };
 Character.prototype.action = function (act) {
-  console.log(`${this.name}: ${act}`);
+  setTimeout(() => {
+    console.log(`${this.name}: ${act}`);
+  }, 2000);
 };
 Character.prototype.action2 = function (phrase) {
   setTimeout(() => {
@@ -52,34 +58,27 @@ function Animal(params) {
 
 Object.setPrototypeOf(Animal.prototype, Character.prototype);
 
-
 Animal.prototype.say = function (phrase) {
   if (this.canSpeak) {
     setTimeout(() => {
       console.log(`${this.name}: ${phrase}`);
-    }, 4000);
+    }, 2000);
   } else {
     console.log(`${this.name}: rrrrrr!`);
   }
 };
-// Animal.prototype.say = function (phrase2) {
-//   return new Promise((resolve, reject) => {
-//     setTimeout(() => {
-//       if (this.canSpeak) {
-//         resolve(`${this.name}: ${phrase2}`);
-//       } else {
-//         reject(`${this.name}: rrrrr!`);
-//       }
-//     }, 3000);
-//   });
-// }
+
+let mainCharacter = function (params) {
+  Character.apply(this, arguments);
+  this.answer = params.answer;
+};
 
 function fairytale() {
   let grandFa = new Character({ name: 'Дід' });
   let grandMa = new Character({ name: 'Бабця' });
   let mainCharacter = new Character({
     name: 'Колобок',
-    answ: 'Не їж мене, ' + ' ' + 'я тобі пісеньки заспіваю',
+    answer: 'Не їж мене, ' + ' ' + 'я тобі пісеньки заспіваю',
     say: function (phrase) {
       let kolobokProm = new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -88,13 +87,22 @@ function fairytale() {
       });
       return kolobokProm;
     },
+    song: ['Я по засіку метений, ',
+      'Я із борошна спечений, - ',
+      ('Я від ' + grandMa.name + ' втік'),
+      (' Я від ' + grandFa.name + ' втік'),
+      ' То й від тебе втечу!'],
   });
-  let fox = new Animal({ name: 'Лисичка' });
+  let author = new Character({ name: 'Автор' });
+  let fox = new Animal({
+    name: 'Лисичка',
+  });
   fox.canSpeak = true;
 
   console.log(grandFa);
   console.log(grandMa);
   console.log(mainCharacter);
+  console.log(author);
   console.log(fox);
 
   grandFa.say('Спекла б ти колобок!');
@@ -103,22 +111,20 @@ function fairytale() {
   grandMa.action(`Пішла в хижку, назмітала в засіку борошенця, витопила в печі, замісила гарненько борошно, спекла ${mainCharacter.name}`);
   mainCharacter.action2('Колобок та й побіг.');
   fox.say('Колобок, колобок, я тебе з\'їм!');
-  // mainCharacter.say('Лисичко сестричко не їж мене, я тобі пісеньки заспіваю!');
-  // Поки не розумію, як саме встановити сет таймаут саме для закоментованої репліки,
-  // щоб повідомлення виводилось після "Колобок, колобок, я тебе з'їм".
+  mainCharacter.say('Лисичко сестричко не їж мене, я тобі пісеньки заспіваю!');
+  fox.say('Колобок, чому мовчиш?');
+  fox.say('Ану заспівай!');
+  mainCharacter.say('Я від бабці пішов, я від..');
+  author.say('А лисичка його гам! Та й з\'їла.');
+  
 
   chapter1(grandFa, grandMa, mainCharacter);
   chapter5(mainCharacter, fox);
 }
 
 function chapter1(grandFa, grandMa, mainCharacter) {
-
 }
 
 async function chapter5(mainCharacter, fox) {
-  let kolobokAnswer = await Character.prototype.say('Лисичко сестричко не їж мене, я тобі пісеньки заспіваю!');
-  console.log('kolobokAnswer', kolobokAnswer);
-  mainCharacter.prototype.say('Лисичко сестричко не їж мене, я тобі пісеньки заспіваю!');
-  console.log(mc.say);
 }
 fairytale()
