@@ -1,130 +1,133 @@
-let GrandFa = function () {};
-GrandFa.prototype.age = 'old';
-let GrandMa = function () {};
-GrandMa.prototype = new GrandFa();
-let MainCharacter = function (params) {
-  console.log(params);
-};
-MainCharacter.prototype.age = 'young';
-let Fox = function () {};
-Fox.prototype = new MainCharacter();
 
-let gf = new GrandFa();
-let gm = new GrandMa();
-let mc = new MainCharacter();
-let f = new Fox();
+async function fairytale() {
+  let Character = function (params) {
+    this.name = params.name;
+    this.action = params.action;
+    this.song = params.song;
+  };
+  
+  Character.prototype.say = function (phrase) {
+    let characterProm = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(`${this.name}: ${phrase}`);
+      }, 2000);
+    });
+    return characterProm;
+  };
+  Character.prototype.characterAction = function (phrase) {
+    let characterActProm = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(`${this.name}: ${phrase}`);
+      }, 3000);
+    });
+    return characterActProm;
+  };
 
-console.log([gf.age, gm.age, mc.age, f.age]);
-
-function Character(params) {
-  this.name = params.name;
-  this.isAnimal = false;
-  this.isCharacter = true;
-  this.canSpeak = true;
-  this.pause = true;
-}
-
-Character.prototype.say = function (phrase) {
-  setTimeout(() => {
-    console.log(`${this.name}: ${phrase}`);
-  }, 2000);
-};
-Character.prototype.action = function (act) {
-  setTimeout(() => {
-    console.log(`${this.name}: ${act}`);
-  }, 2000);
-};
-Character.prototype.action2 = function (phrase) {
-  setTimeout(() => {
-    console.log(`${this.name}: ${phrase}`);
-    }, 2000);
-};
-
-// Character.prototype.say = function (phrase) {
-//   let charProm = new Promise((resolve, reject) => {
-//     setTimeout(() => {
-//       resolve(`${this.name}: ${phrase}`);
-//     }, 2000);
-//   });
-//   return charProm;
-// };
-
-
-function Animal(params) {
-  this.name = params.name;
-  this.isAnimal = true;
-  this.canSpeak = false;
-}
-
-Object.setPrototypeOf(Animal.prototype, Character.prototype);
-
-Animal.prototype.say = function (phrase) {
-  if (this.canSpeak) {
-    setTimeout(() => {
-      console.log(`${this.name}: ${phrase}`);
-    }, 2000);
-  } else {
-    console.log(`${this.name}: rrrrrr!`);
-  }
-};
-
-let mainCharacter = function (params) {
-  Character.apply(this, arguments);
-  this.answer = params.answer;
-};
-
-function fairytale() {
-  let grandFa = new Character({ name: 'Дід' });
-  let grandMa = new Character({ name: 'Бабця' });
-  let mainCharacter = new Character({
-    name: 'Колобок',
-    answer: 'Не їж мене, ' + ' ' + 'я тобі пісеньки заспіваю',
-    say: function (phrase) {
-      let kolobokProm = new Promise((resolve, reject) => {
+  let Animal = function (params) {
+    Character.apply(this, arguments);
+    this.canSpeak = params.canSpeak;
+  };
+  Animal.prototype = Object.create(Character.prototype);
+  Animal.prototype.constructor = Animal;
+  Animal.prototype.say = function (phrase) {
+    if (this.canSpeak) {
+      let animalProm = new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve(`${this.name}: ${phrase}`);
-        }, 5000);
+        }, 2000);
       });
-      return kolobokProm;
-    },
+      return animalProm;
+    } else { console.log(`${this.name}: rrrrrr!`); }
+  };
+  
+  let Author = function (params) {
+    Character.apply(this, arguments);
+  };
+  Author.prototype = Object.create(Character.prototype);
+  Author.prototype.constructor = Author;
+  
+  let grandFa = new Character({
+    name: 'Дідусь'
+  });
+  
+  let grandMa = new Character({
+    name: 'Бабуся',
+    action: ['Пішла в хижку, ', 'назмітала в засіку борошенця, витопила в печі, замісила гарненько борошно, спекла ']
+  });
+  
+  let mainCharacter = new Character({
+    name: 'Колобок',
     song: ['Я по засіку метений, ',
       'Я із борошна спечений, - ',
       ('Я від ' + grandMa.name + ' втік'),
       (' Я від ' + grandFa.name + ' втік'),
-      ' То й від тебе втечу!'],
+      ' То й від тебе втечу!']
   });
-  let author = new Character({ name: 'Автор' });
+  
   let fox = new Animal({
     name: 'Лисичка',
+    canSpeak: true
   });
-  fox.canSpeak = true;
-
+  
+  let authorMain = new Author({
+    name: 'Диктор'
+  });
+  
   console.log(grandFa);
   console.log(grandMa);
   console.log(mainCharacter);
-  console.log(author);
   console.log(fox);
-
-  grandFa.say('Спекла б ти колобок!');
-  grandMa.say('Та з чого ж я спечу, як і борошна немає?');
-  grandFa.say('От, бабусю, піди в хижку та назмітай у засіку борошенця, то й буде колобок.');
-  grandMa.action(`Пішла в хижку, назмітала в засіку борошенця, витопила в печі, замісила гарненько борошно, спекла ${mainCharacter.name}`);
-  mainCharacter.action2('Колобок та й побіг.');
-  fox.say('Колобок, колобок, я тебе з\'їм!');
-  mainCharacter.say('Лисичко сестричко не їж мене, я тобі пісеньки заспіваю!');
-  fox.say('Колобок, чому мовчиш?');
-  fox.say('Ану заспівай!');
-  mainCharacter.say('Я від бабці пішов, я від..');
-  author.say('А лисичка його гам! Та й з\'їла.');
+  console.log(authorMain);
   
+  await chapter1(grandFa, grandMa, mainCharacter, authorMain);
+  
+  await chapter5(mainCharacter, fox, authorMain);
+};
 
-  chapter1(grandFa, grandMa, mainCharacter);
-  chapter5(mainCharacter, fox);
-}
-
-function chapter1(grandFa, grandMa, mainCharacter) {
-}
-
-async function chapter5(mainCharacter, fox) {
-}
 fairytale()
+
+async function chapter1(grandFa, grandMa, mainCharacter, authorMain) {
+  let grandFaPromise = await grandFa.say('Спекла б ти колобок!');
+  console.log('grandFaPromise', grandFaPromise);
+
+  let grandMaPromuise = await grandMa.say('Та з чого ж я спечу, як і борошна немає?');
+  console.log('grandMaPromuise', grandMaPromuise);
+
+  let grandFaPromise2 = await grandFa.say('От, бабусю, піди в хижку та назмітай у засіку борошенця, то й буде колобок.');
+  console.log('grandFaPromise2', grandFaPromise2);
+
+  let grandMaAct = grandMa.action.push(mainCharacter.name);
+  let newGrandMaAct = grandMa.action.join('');
+  let newGrandMaActProm = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(`${grandMa.name}: ${newGrandMaAct}`);
+    }, 3000);
+  });
+  let newGrandMaActPromise = await newGrandMaActProm;
+  console.log(newGrandMaActPromise);
+
+  let kolobokEscapePromise = await authorMain.characterAction('Колобок та й побіг.');
+  console.log('kolobokEscapePromise', kolobokEscapePromise);
+}
+
+async function chapter5(mainCharacter, fox, authorMain) {
+  let foxPromise = await fox.say('Колобок колобок, я тебе з\'їм!');
+  console.log('foxPromise', foxPromise);
+
+  let mainCharacterPromise = await mainCharacter.say('Лисичко сестричко не їж мене, я тобі пісеньки заспіваю..');
+  console.log('mainCharacterPromise', mainCharacterPromise);
+
+  let foxPromise1 = await fox.say('Колобок, чому мовчиш?');
+  console.log('foxPromise1', foxPromise1);
+
+  let foxPromise2 = await fox.say('Ану заспівай!');
+  console.log('foxPromise2', foxPromise2);
+
+  let removedSongItem = mainCharacter.song.splice(1);
+  let newAction = mainCharacter.song.join('');
+  let kolobokPromise2 = await mainCharacter.characterAction(newAction);
+  console.log('kolobokPromise2', kolobokPromise2);
+
+  let mainCharacterGotCaught = await authorMain.characterAction('А лисичка — гам його! Та й з\'їла!');
+  console.log('mainCharacterGotCaught', mainCharacterGotCaught);
+};
